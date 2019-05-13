@@ -191,9 +191,8 @@ def number(parseExpression):
             break
         
     print("RESULTANUMERO:",numero,"TANADISNEY")
-    if numero != None:
-        print("RESULTANUMERO NO IF: ",numero)
-        numeroF = resultaNumero(numero)
+    
+    numeroF = resultaNumero(numero)
     print("NUMERO QUE TA RETORNANDO: ",numeroF)
     return numeroF
 
@@ -233,7 +232,7 @@ def main():
                       "expressao" : "",
                       "simboloAtual" : "",
                       "resultado" : 0}
-    parseExpression["expressao"] = "3+5 * 2e+2"
+    parseExpression["expressao"] = "3+5*2e+2"
     parseExpression = expSemEspaco(parseExpression)
     expVdd = parseExpression["expressao"]
     print(expVdd)
