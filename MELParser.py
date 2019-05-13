@@ -1,8 +1,55 @@
+#(expr) ::= (term) ((‘+’ | ‘-’) (term))*
+def expr(parseExpression):
+    termo1 = term(parseExpression)
+    simbolos: tuple("+","-")
+
+    while True:
+        if (parseExpression["expressao"]["posicao"] in simbolos):
+            parseExpression["simboloAtual"] = verifSimbolo(parseExpression)
+            termo2 = term(parseExpression)
+
+            if (parseExpression["simboloAtual"] == "+"):
+                termo1 += termo2
+            elif (parseExpression["simboloAtual"] == "-"):
+                termo1 -= termo2
+
+#(term) ::= (factor) ((‘*’ | ‘/’ | ‘//’ | ‘%’) (factor))*
+def term(parseExpression):
+    termo1 = factor(parseExpression)
+    simbolos: tuple("*","/","//","%")
+
+    while True:
+    
+        if (parseExpression["expressao"]["posicao"] in simbolos):
+            
+            parseExpression["simboloAtual"] = verifSimbolo(parseExpression)
+            termo2 = factor(parseExpression)
+
+            if (parseExpression["simboloAtual"] == "*"):
+                termo1 *= termo2
+            elif (parseExpression["simboloAtual"] == "/"):
+                termo1 /= termo2
+            elif (parseExpression["simboloAtual"] == "//"):
+                termo1 //= termo2
+            elif (parseExpression["simboloAtual"] == "%"):
+                termo1 %= termo2
+        else:
+            break
+
+    return termo1
+
+
 #(factor) ::= (base) (‘^’ (factor))?
 def factor(parseExpression):
-    parseExpression = base(parseExpression)
+    
+    valor = base(parseExpression)
 
-    if(parseExpression[])
+    if(parseExpression["expressao"]["posicao"] == "^"):
+        parseExpression["posicao"] = parseExpression["posicao"] + 1
+        return valor ** factor(parseExpression)
+
+    return valor
+
 
 #(base) ::= (‘+’ | ‘-’) (base)
 #| (number)
@@ -10,14 +57,12 @@ def factor(parseExpression):
 def base(parseExpression):
     
     if(parseExpression["expressao"]["posicao"] == '+'):
-        parseExpression['simboloAtual'] = parseExpression['simboloAtual'] + '+'
         parseExpression["posicao"] = parseExpression["posicao"] + 1
-        return base(parseExpression)
+        return 1*base(parseExpression)
 
     elif(parseExpression["expressao"]["posicao"] == '-'):
-        parseExpression['simboloAtual'] = parseExpression['simboloAtual'] + '-'
         parseExpression["posicao"] = parseExpression["posicao"] + 1
-        return base(parseExpression)
+        return  (-1)*base(parseExpression)
 
     if(parseExpression["expressao"]["posicao"] == "("):
         parseExpression["posicao"] = parseExpression["posicao"] + 1
@@ -82,10 +127,11 @@ def number(parseExpression):
     if breakReturn:
         parseExpression["resultado"] = "Expressão errada, favor corrigi-la"
     else:
-        return numero
-    
-        
-
+        numeroF = resultaNumero(numero)
+        return numeroF
+            
+def resultaNumero(numero):
+    return numeroF
 
 # (digit) ::= ‘0’ | ‘1’ | ‘2’ | ‘3’ | ‘4’ | ‘5’ | ‘6’ | ‘7’ | ‘8’ | ‘9’
 def digit(digito):
