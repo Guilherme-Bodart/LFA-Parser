@@ -130,9 +130,10 @@ def base(parseExpression):
             if parseExpression["expressao"][parseExpression['posicao']] == ")":
                 parseExpression["posicao"] = parseExpression["posicao"] + 1
                 return resultado
-        
+        print("teste print funcao",number(parseExpression))
         return number(parseExpression)
     else:
+        print("teste print funcao",number(parseExpression))
         return number(parseExpression) 
 
 
@@ -145,7 +146,6 @@ def number(parseExpression):
     sinal: tuple = ('+', '-')
     numero = ''
     ultimoAdd = ''
-    breakReturn = False
     for i in range(len(parseExpression["expressao"])):
         k = parseExpression['posicao']
 
@@ -161,7 +161,6 @@ def number(parseExpression):
             elif k == '.':
                 if ultimoAdd != parseExpression['expressao'][k]:
                     if '.' in numero:
-                        breakReturn = True
                         break
                     else:
                         numero = numero + parseExpression['expressao'][k]
@@ -171,7 +170,6 @@ def number(parseExpression):
             elif parseExpression['expressao'][k] in euler:
                 if ultimoAdd != parseExpression['expressao'][k]:
                     if 'e' in numero or 'E' in numero:
-                        breakReturn = True
                         break
                     else:
                         numero = numero + parseExpression['expressao'][k]
@@ -192,8 +190,10 @@ def number(parseExpression):
         else:
             break
         
-    
-    numeroF = resultaNumero(numero)
+    print("RESULTANUMERO:",numero,"TANADISNEY")
+    if numero != None:
+        print("RESULTANUMERO NO IF: ",numero)
+        numeroF = resultaNumero(numero)
     print("NUMERO QUE TA RETORNANDO: ",numeroF)
     return numeroF
 
@@ -207,6 +207,7 @@ def resultaNumero(numero):
     elif "E" in numero:
         splite = numero.split("E")
     else:
+        print("tentanto converter",numero)
         numeroF = float(numero)
     
     if splite!=[]:
@@ -232,7 +233,7 @@ def main():
                       "expressao" : "",
                       "simboloAtual" : "",
                       "resultado" : 0}
-    parseExpression["expressao"] = "3+5 * 2e+2 + 2^2"
+    parseExpression["expressao"] = "3+5 * 2e+2"
     parseExpression = expSemEspaco(parseExpression)
     expVdd = parseExpression["expressao"]
     print(expVdd)
