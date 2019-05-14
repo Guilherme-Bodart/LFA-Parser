@@ -64,7 +64,7 @@ def term(parseExpression):
     return termo1
  
 
-
+#Verifica qual é o simbolo atual e adiciona na String de simbolos do dicionário
 def verifSimbolo(parseExpression):
     simbolo = ""
     sinal1: tuple = ('+', '-')
@@ -204,7 +204,7 @@ def number(parseExpression):
     return numeroF
 
 
-#(digit)+ ‘.’? (digit)* ((‘E’ | ‘e’) (‘+’ | ‘-’)? (digit)+)?           
+#Devolve a String passada como um numero calculável          
 def resultaNumero(numero):
     numeroF = 0
     splite = []
@@ -229,6 +229,7 @@ def digit(digito):
     verif = digito.isnumeric()
     return verif
 
+#Retira todos os espaços da expressão passada
 def expSemEspaco(parseExpression):
     parseExpression["expressao"] = "".join(parseExpression["expressao"].split())
     return parseExpression
