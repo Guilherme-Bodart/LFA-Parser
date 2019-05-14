@@ -41,7 +41,7 @@ if __name__ == '__main__':
 
 
 <h3>Gramática do Trabalho</h3>
-
+![alt text](https://github.com/Guilherme-Bodart/LFA-Parser/blob/master/imagens/Regra%20de%20produ%C3%A7%C3%A3o%20da%20gram%C3%A1tica%20MEL.png)
 
 
 ### Como executar?
@@ -51,7 +51,8 @@ Para buildar/executar o app no ambiente Linux basta abrir o CLI no diretório do
     
 O python é na versão 3.7.3, não tenho ciência se terá que baixar a nova versão antes, eu apenas testei o programa no ambiente Windowns.
 
-   
+### Informações sobre "erros"
+Eu tentei fazer de um jeito que ao invés de avisar o error, ele deixaria passar, porém com um resultado, de acordo com a expressão
     
 ### Informações adicionais
 Todo o código fonte está hospedado no meu [GitHub](https://github.com/Guilherme-Bodart/LFA-Parser).
