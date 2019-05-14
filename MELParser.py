@@ -8,11 +8,15 @@ def expr(parseExpression):
             if parseExpression["expressao"][parseExpression['posicao']] in simbolos:
                 parseExpression["simboloAtual"] = verifSimbolo(parseExpression)
                 termo2 = term(parseExpression)
+                tam = len(parseExpression["simboloAtual"])
 
-                if parseExpression["simboloAtual"] == "+" and termo2!=None:
+                if parseExpression["simboloAtual"][tam-1] == "+" and termo2!=None:
                     termo1 += termo2
-                elif parseExpression["simboloAtual"] == "-" and termo2!=None:
+                    parseExpression["simboloAtual"] = parseExpression["simboloAtual"][0:tam-1]
+
+                elif parseExpression["simboloAtual"][tam-1] == "-" and termo2!=None:
                     termo1 -= termo2
+                    parseExpression["simboloAtual"] = parseExpression["simboloAtual"][0:tam-1]
             
             else:
                 break
@@ -24,6 +28,8 @@ def expr(parseExpression):
 #(term) ::= (factor) ((‘*’ | ‘/’ | ‘//’ | ‘%’) (factor))*
 def term(parseExpression):
     termo1 = factor(parseExpression)
+    
+    
     simbolos: tuple = ('*', '/','//','%')
     if(termo1==None):
         termo1 = 1
@@ -33,15 +39,23 @@ def term(parseExpression):
                 
                 parseExpression["simboloAtual"] = verifSimbolo(parseExpression)
                 termo2 = factor(parseExpression)
-
-                if parseExpression["simboloAtual"] == "*" and termo2!=None:
+                tam = len(parseExpression["simboloAtual"])
+                if parseExpression["simboloAtual"][tam-1] == "*" and termo2!=None:
                     termo1 *= termo2
-                elif parseExpression["simboloAtual"] == "/" and termo2!=None:
-                    termo1 /= termo2
-                elif parseExpression["simboloAtual"] == "//" and termo2!=None:
+                    parseExpression["simboloAtual"] = parseExpression["simboloAtual"][0:tam-1]
+
+                elif parseExpression["simboloAtual"][(tam-2):(tam)]=="//"  and termo2!=None:
                     termo1 //= termo2
-                elif parseExpression["simboloAtual"] == "%" and termo2!=None:
+                    parseExpression["simboloAtual"] = parseExpression["simboloAtual"][0:tam-2]
+
+                elif parseExpression["simboloAtual"][tam-1] == "/" and termo2!=None:
+                    termo1 /= termo2
+                    parseExpression["simboloAtual"] = parseExpression["simboloAtual"][0:tam-1]               
+                
+
+                elif parseExpression["simboloAtual"][tam-1] == "%" and termo2!=None:
                     termo1 %= termo2
+                    parseExpression["simboloAtual"] = parseExpression["simboloAtual"][0:tam-1]
             else:
                 break
         else:
@@ -84,17 +98,17 @@ def verifSimbolo(parseExpression):
                 break
 
     if simbolo == "+":
-        parseExpression["simboloAtual"] = "+"
+        parseExpression["simboloAtual"] = parseExpression["simboloAtual"] +  "+"
     elif simbolo == "-":
-        parseExpression["simboloAtual"] = "-"
+        parseExpression["simboloAtual"] = parseExpression["simboloAtual"] +  "-"
     elif simbolo == "*":
-        parseExpression["simboloAtual"] = "*"
+        parseExpression["simboloAtual"] = parseExpression["simboloAtual"] +  "*"
     elif simbolo == "/":
-        parseExpression["simboloAtual"] = "/"
+        parseExpression["simboloAtual"] = parseExpression["simboloAtual"] +  "/"
     elif simbolo == "//":
-        parseExpression["simboloAtual"] = "//"
+        parseExpression["simboloAtual"] = parseExpression["simboloAtual"] +  "//"
     elif simbolo == "%":
-        parseExpression["simboloAtual"] = "%"
+        parseExpression["simboloAtual"] = parseExpression["simboloAtual"] +  "%"
     
     return parseExpression["simboloAtual"]
 
@@ -130,10 +144,9 @@ def base(parseExpression):
             if parseExpression["expressao"][parseExpression['posicao']] == ")":
                 parseExpression["posicao"] = parseExpression["posicao"] + 1
                 return resultado
-        print("teste print funcao",number(parseExpression))
+        
         return number(parseExpression)
     else:
-        print("teste print funcao",number(parseExpression))
         return number(parseExpression) 
 
 
@@ -150,15 +163,13 @@ def number(parseExpression):
         k = parseExpression['posicao']
 
         if k < len(parseExpression["expressao"]):
-            
             if digit(parseExpression['expressao'][k]):
-                print("DIGITO", parseExpression['expressao'][k])
                 numero = numero + parseExpression['expressao'][k]
-                print("NUMERO PASSO A PASSO: ",numero)
                 ultimoAdd = parseExpression['expressao'][k]
                 parseExpression['posicao']+=1
 
-            elif k == '.':
+            elif parseExpression['expressao'][k] == '.':
+                
                 if ultimoAdd != parseExpression['expressao'][k]:
                     if '.' in numero:
                         break
@@ -185,15 +196,11 @@ def number(parseExpression):
                 else:
                     break
             else:
-                print("VEZES", parseExpression['expressao'][k])
                 break
         else:
             break
         
-    print("RESULTANUMERO:",numero,"TANADISNEY")
-    
     numeroF = resultaNumero(numero)
-    print("NUMERO QUE TA RETORNANDO: ",numeroF)
     return numeroF
 
 
@@ -206,7 +213,6 @@ def resultaNumero(numero):
     elif "E" in numero:
         splite = numero.split("E")
     else:
-        print("tentanto converter",numero)
         numeroF = float(numero)
     
     if splite!=[]:
@@ -232,15 +238,14 @@ def main():
                       "expressao" : "",
                       "simboloAtual" : "",
                       "resultado" : 0}
-    parseExpression["expressao"] = "3+5*2e+2"
+    parseExpression["expressao"] = input("Entre com a expressão que deseja: ")
+    expVdd = parseExpression["expressao"]   
     parseExpression = expSemEspaco(parseExpression)
-    expVdd = parseExpression["expressao"]
-    print(expVdd)
     
-    
-        
-    numero = expr(parseExpression)
-    print("RESULTADO: ",numero)
+
+    print("Expressao: ",expVdd)
+    parseExpression["resultado"] = expr(parseExpression)
+    print("Resultado: ",parseExpression["resultado"])
     
     return 0
 

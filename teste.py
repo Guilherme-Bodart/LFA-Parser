@@ -3,7 +3,7 @@ def main():
                        "expressao": "",
                        "simboloAtual": "",
                        "resultado": 0}
-    parseExpression["expressao"] = "-5E+2/*-///////3"
+    parseExpression["expressao"] = "-5E+2/-///////3"
     simbolo = ""
     sinal1: tuple = ('+', '-')
     sinal2: tuple = ('*', '/','//','%')
