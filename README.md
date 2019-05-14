@@ -41,9 +41,7 @@ if __name__ == '__main__':
 
 
 <h3>Gramática do Trabalho</h3>
-<p align="center">
-  <img src="https://github.com/Guilherme-Bodart/LFA-Parser/blob/master/imagens/Regra%20de%20produ%C3%A7%C3%A3o%20da%20gram%C3%A1tica%20MEL.png?raw=true>
-</p>
+
 
 
 ### Como executar?
